@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ganapati Idol Booking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Ganapati Idol Booking System</h1>
+    <div id="idol-list" class="idol-container">
+        <!-- Idol Cards will be dynamically inserted here by JS -->
+    </div>
+
+    <script>
+        // Simulated Idol Data (this would come from backend in future)
+        const idols = [
+            { id: 1, name: "Eco-Friendly Ganapati", size: "2 feet", price: 1500, available: true },
+            { id: 2, name: "Clay Ganapati", size: "3 feet", price: 2500, available: true },
+            { id: 3, name: "Painted Ganapati", size: "4 feet", price: 3500, available: true },
+            { id: 4, name: "Bal Ganapati", size: "1.5 feet", price: 1000, available: true }
+        ];
+
+        function renderIdols() {
+            const idolList = document.getElementById('idol-list');
+            idolList.innerHTML = ''; // Clear previous idols
+
+            idols.forEach(idol => {
+                const card = document.createElement('div');
+                card.className = 'idol-card';
+
+                card.innerHTML = `
+                    <h3>${idol.name}</h3>
+                    <p>Size: ${idol.size}</p>
+                    <p>Price: ₹${idol.price}</p>
+                    <button ${idol.available ? '' : 'disabled'} onclick="bookIdol(${idol.id})">
+                        ${idol.available ? 'Book Now' : 'Booked'}
+                    </button>
+                `;
+
+                idolList.appendChild(card);
+            });
+        }
+
+        function bookIdol(id) {
+            const idol = idols.find(i => i.id === id);
+            if (idol && idol.available) {
+                idol.available = false;
+                alert(`Successfully booked ${idol.name}`);
+                renderIdols();
+            } else {
+                alert("Idol is already booked!");
+            }
+        }
+
+        window.onload = renderIdols;
+    </script>
+</body>
+</html>
